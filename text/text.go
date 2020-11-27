@@ -1,6 +1,7 @@
 package text
 
 import (
+	"image"
 	"image/color"
 
 	"github.com/cs3238-tsuzu/prasoba/transformer"
@@ -15,25 +16,30 @@ type Text struct {
 	f    font.Face
 
 	*transformer.Rect
-	col color.Color
+	offset image.Point
+	col    color.Color
 }
 
 // NewText returns a new Text
 func NewText(t string, f font.Face) *Text {
+	bound := text.BoundString(f, t)
+
 	return &Text{
-		text: t,
-		f:    f,
-		Rect: transformer.NewRect(text.BoundString(f, t)),
+		text:   t,
+		f:      f,
+		Rect:   transformer.NewRect(image.Rect(0, 0, bound.Dx(), bound.Dy())),
+		offset: bound.Min,
 	}
 }
 
 // Clone returns a cloned Text
 func (d *Text) Clone() *Text {
 	return &Text{
-		text: d.text,
-		f:    d.f,
-		Rect: d.Rect.Clone(),
-		col:  d.col,
+		text:   d.text,
+		f:      d.f,
+		Rect:   d.Rect.Clone(),
+		offset: d.offset,
+		col:    d.col,
 	}
 }
 
@@ -60,5 +66,7 @@ func (d *Text) From(x, y int, mode transformer.PositionMode) *Text {
 
 // Draw draws a given text on a given destination image dst.
 func (d *Text) Draw(dst *ebiten.Image) {
-	text.Draw(dst, d.text, d.f, d.Rect.Min().X, d.Rect.Min().Y, d.col)
+	pos := d.Rect.Min().Sub(d.offset)
+
+	text.Draw(dst, d.text, d.f, pos.X, pos.Y, d.col)
 }

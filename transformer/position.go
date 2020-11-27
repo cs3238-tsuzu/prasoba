@@ -22,7 +22,7 @@ const (
 func CalcRenderedPos(fx, fy, width, height int, mode PositionMode) (nx, ny int) {
 	dx, dy := int(mode%3), int(mode/3)
 
-	y := fy + height*dy/2
+	y := fy - height*dy/2
 	x := fx - width*dx/2
 
 	return y, x
