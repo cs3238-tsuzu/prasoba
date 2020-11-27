@@ -5,17 +5,17 @@ import "image"
 type PositionMode int
 
 const (
-	BottomLeft PositionMode = iota
-	BottomCenter
-	BottomRight
+	TopLeft PositionMode = iota
+	TopCenter
+	TopRight
 
 	CenterLeft
 	Center
 	CenterRight
 
-	TopLeft
-	TopCenter
-	TopRight
+	BottomLeft
+	BottomCenter
+	BottomRight
 )
 
 // CalcRenderedPos calculates the bottom-left position to render at from the transformed position in that specified mode
