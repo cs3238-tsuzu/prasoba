@@ -25,7 +25,7 @@ func CalcRenderedPos(fx, fy, width, height int, mode PositionMode) (nx, ny int) 
 	y := fy - height*dy/2
 	x := fx - width*dx/2
 
-	return y, x
+	return x, y
 }
 
 // CalcRenderedPosFromRectangle calculates the bottom-left position to render at from the transformed position in that specified mode
